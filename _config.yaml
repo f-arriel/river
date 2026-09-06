@@ -20,11 +20,10 @@ future: true
 # (delete any you don't use — the footer only renders the ones with a value)
 links:
   email: hello@example.org
-  home-page: https://example.org
-  # address: https://maps.app.goo.gl/
-  # github: https://github.com/
-  # twitter: https://twitter.com/
-  # instagram: https://instagram.com/
+  home-page: https://pengairan.ub.ac.id/
+  instagram: https://www.instagram.com/river.idn/
+  external: https://f-arriel.github.io/river-website/admin/
+  
 
 ### jekyll settings
 
