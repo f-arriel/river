@@ -2,7 +2,6 @@
 ---
 
 <div class="home-hero">
-  <img src="{{ '/images/logo-stacked.png' | relative_url }}" alt="RIVER" class="home-hero-logo">
   <p class="home-hero-subtitle">Teknik Pengairan Universitas Brawijaya</p>
 </div>
 
