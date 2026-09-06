@@ -1,0 +1,4 @@
+# RIVER publications — one DOI per line.
+# The citation workflow turns these into _data/citations.yaml automatically.
+# Example:
+# - id: 10.1000/example.doi

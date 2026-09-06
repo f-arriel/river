@@ -1,0 +1,75 @@
+---
+layout: default
+---
+
+{% assign type = site.data.types[page.role] %}
+{% assign name_parts = page.name | split: " / " %}
+
+<div class="member-page" data-no-page-nav>
+
+  <aside class="member-side">
+    <img
+      src="{{ page.image | relative_url | uri_escape }}"
+      class="member-photo"
+      alt="{{ page.name | regex_strip }}"
+      loading="lazy"
+      {% include fallback.html %}
+    >
+
+    <div class="member-links">
+      {% for link in page.links %}
+        {% assign key = link[0] %}
+        {% assign value = link[1] %}
+        {% if value and value != "" %}
+          {% include button.html type=key link=value style="bare" %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </aside>
+
+  <div class="member-main">
+
+    <nav class="member-crumbs" aria-label="breadcrumb">
+      <a href="{{ "/team/" | relative_url }}">Team / Tim</a>
+      <span>/</span>
+      <span>{{ name_parts[0] }}</span>
+    </nav>
+
+    <h1 class="member-name">
+      {{ name_parts[0] }}
+      {% if name_parts[1] %}
+        <span class="member-name-alt">{{ name_parts[1] }}</span>
+      {% endif %}
+    </h1>
+
+    {% if type %}
+      <p class="member-role">{{ type.description }}</p>
+    {% endif %}
+
+    {% if page.description or page.affiliation or page.graduation_year %}
+      <section class="member-block">
+        <h2>Affiliations / Afiliasi</h2>
+        <ul>
+          {% if page.description %}
+            <li>{{ page.description }}</li>
+          {% endif %}
+          {% if page.affiliation %}
+            <li>{{ page.affiliation }}</li>
+          {% endif %}
+          {% if page.graduation_year %}
+            <li>Graduated {{ page.graduation_year }} / Lulus {{ page.graduation_year }}</li>
+          {% endif %}
+        </ul>
+      </section>
+    {% endif %}
+
+    {% assign bio = content | strip %}
+    {% if bio != "" %}
+      <section class="member-block">
+        <h2>Biography / Biografi</h2>
+        {{ content }}
+      </section>
+    {% endif %}
+
+  </div>
+</div>

@@ -1,0 +1,153 @@
+---
+---
+
+// member profile page
+// see _layouts/member.html
+
+$stack-below: 850px;
+$sidebar: 280px;
+
+.member-page {
+  display: grid;
+  grid-template-columns: $sidebar 1fr;
+  gap: 48px;
+  width: 100%;
+  text-align: left;
+}
+
+// left column, stays in place while the right column scrolls
+
+.member-side {
+  position: sticky;
+  top: 110px;
+  align-self: start;
+}
+
+.member-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 0 0 20px 0;
+  border-radius: var(--rounded);
+  object-fit: cover;
+}
+
+.member-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.member-links .button-wrapper {
+  width: 100%;
+  margin: 0;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.member-links .button-wrapper:first-child {
+  border-top: 1px solid var(--light-gray);
+}
+
+.member-links .button {
+  justify-content: center;
+  width: 100%;
+  padding: 9px 4px;
+  font-size: 0.9rem;
+}
+
+// right column
+
+.member-main {
+  min-width: 0;
+}
+
+.member-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+  color: var(--gray);
+  font-size: 0.85rem;
+}
+
+.member-crumbs a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.member-crumbs a:hover {
+  text-decoration: underline;
+}
+
+.member-name {
+  margin: 0 !important;
+  font-size: 2.4rem !important;
+  font-weight: var(--bold);
+  line-height: 1.15;
+  text-align: left;
+}
+
+.member-name-alt {
+  display: block;
+  margin-top: 4px;
+  color: var(--dark-gray);
+  font-size: 1.3rem;
+  font-weight: var(--regular);
+}
+
+.member-role {
+  margin: 10px 0 0 0 !important;
+  color: var(--gray);
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+// hairline-separated content blocks
+
+.member-block {
+  margin-top: 44px;
+}
+
+.member-block > h2 {
+  margin: 0 0 14px 0 !important;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--light-gray);
+  font-size: 1.15rem !important;
+  font-weight: var(--semi-bold);
+  text-align: left;
+}
+
+.member-block ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.member-block li {
+  margin-bottom: 6px;
+}
+
+.member-block p {
+  text-align: left;
+}
+
+// narrow screens: single column, sidebar unpinned
+
+@media (max-width: $stack-below) {
+  .member-page {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .member-side {
+    position: static;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  .member-name {
+    font-size: 1.9rem !important;
+  }
+
+  .member-block {
+    margin-top: 32px;
+  }
+}

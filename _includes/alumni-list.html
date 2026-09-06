@@ -1,0 +1,52 @@
+{% comment %}
+  renders every member with role "alumni" as a clickable row that links
+  to their own member page (thesis title, research theme, etc.).
+
+  usage:  {% include alumni-list.html %}
+  optional:  {% include alumni-list.html limit=10 %}
+{% endcomment %}
+
+{% assign alumni = site.members
+  | where_exp: "m", "m.role == 'alumni'"
+  | sort: "graduation_year"
+  | reverse
+%}
+{% if include.limit %}
+  {% assign alumni = alumni | slice: 0, include.limit %}
+{% endif %}
+
+<div class="alumni-list">
+  {% for person in alumni %}
+    {% assign parts = person.name | split: " / " %}
+    {% assign preview = person.content | strip_html | normalize_whitespace | strip %}
+
+    <a
+      class="alumni-item"
+      href="{{ person.url | relative_url | uri_escape }}"
+      aria-label="{{ person.name | regex_strip }}"
+    >
+      <span class="alumni-year">
+        {% if person.graduation_year %}{{ person.graduation_year }}{% else %}—{% endif %}
+      </span>
+
+      <span class="alumni-main">
+        <span class="alumni-name">
+          {{ parts[0] }}
+          {% if parts[1] %}<span class="alumni-name-alt">{{ parts[1] }}</span>{% endif %}
+        </span>
+
+        {% if person.affiliation and person.affiliation != "" %}
+          <span class="alumni-affiliation">{{ person.affiliation }}</span>
+        {% endif %}
+
+        {% if preview != "" %}
+          <span class="alumni-preview">{{ preview | truncate: 90 }}</span>
+        {% endif %}
+      </span>
+
+      <span class="alumni-arrow">
+        {% include icon.html icon="fa-solid fa-chevron-right" %}
+      </span>
+    </a>
+  {% endfor %}
+</div>

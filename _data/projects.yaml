@@ -1,0 +1,12 @@
+# Optional project / resource cards.
+# Uncomment and edit to use, or leave empty.
+#
+# - title: Project name
+#   subtitle: a short subtitle
+#   group: featured
+#   image: images/placeholder.jpg
+#   link: https://example.org
+#   description: One or two sentences about the project.
+#   repo: owner/repository
+#   tags:
+#     - resource

@@ -1,0 +1,29 @@
+# maps a member role to its icon and its "English / Indonesian" label
+
+principal-investigator:
+  icon: "fa-solid fa-microscope"
+  description: "Principal Investigator / Ketua Peneliti"
+
+postdoc:
+  icon: "fa-solid fa-glasses"
+  description: "Postdoctoral Researcher / Peneliti Pascadoktoral"
+
+research-staff:
+  icon: "fa-solid fa-flask"
+  description: "Research Staff / Staf Peneliti"
+
+phd:
+  icon: "fa-solid fa-graduation-cap"
+  description: "PhD Student / Mahasiswa Doktoral"
+
+master:
+  icon: "fa-solid fa-user-graduate"
+  description: "Master's Student / Mahasiswa Magister"
+
+undergrad:
+  icon: "fa-solid fa-book-open"
+  description: "Undergraduate Student / Mahasiswa Sarjana"
+
+alumni:
+  icon: "fa-solid fa-user-check"
+  description: "Alumni / Alumni"

@@ -1,0 +1,119 @@
+---
+---
+
+// clickable alumni list
+// see _includes/alumni-list.html
+
+$stack-below: 600px;
+
+.alumni-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+}
+
+.alumni-item {
+  display: grid;
+  grid-template-columns: 64px 1fr 16px;
+  gap: 0 20px;
+  align-items: center;
+  padding: 16px 10px 16px 14px;
+  border-top: 1px solid var(--light-gray);
+  border-left: 2px solid transparent;
+  color: var(--text);
+  text-decoration: none;
+  transition:
+    border-color var(--transition),
+    background var(--transition);
+}
+
+.alumni-item:last-child {
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.alumni-item:hover,
+.alumni-item:focus-visible {
+  border-left-color: var(--primary);
+  background: var(--background-alt);
+}
+
+// year column
+
+.alumni-year {
+  color: var(--gray);
+  font-family: var(--code);
+  font-size: 0.95rem;
+  font-weight: var(--semi-bold);
+}
+
+// main column
+
+.alumni-main {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.alumni-name {
+  font-size: 1.05rem;
+  font-weight: var(--semi-bold);
+  line-height: 1.3;
+}
+
+.alumni-name-alt {
+  margin-left: 8px;
+  color: var(--gray);
+  font-size: 0.85rem;
+  font-weight: var(--regular);
+}
+
+.alumni-affiliation {
+  color: var(--gray);
+  font-size: 0.85rem;
+}
+
+.alumni-preview {
+  overflow: hidden;
+  color: var(--dark-gray);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// arrow column
+
+.alumni-arrow {
+  color: var(--light-gray);
+  font-size: 0.8rem;
+  transition: color var(--transition);
+}
+
+.alumni-item:hover .alumni-arrow {
+  color: var(--primary);
+}
+
+// narrow screens
+
+@media (max-width: $stack-below) {
+  .alumni-item {
+    grid-template-columns: 52px 1fr;
+    gap: 0 14px;
+    align-items: start;
+  }
+
+  .alumni-name-alt {
+    display: block;
+    margin-left: 0;
+  }
+
+  .alumni-preview {
+    white-space: normal;
+  }
+
+  .alumni-arrow {
+    display: none;
+  }
+}
