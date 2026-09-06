@@ -1,4 +1,8 @@
-# RIVER publications — one DOI per line.
-# The citation workflow turns these into _data/citations.yaml automatically.
-# Example:
-# - id: 10.1000/example.doi
+# RIVER publications — add one entry per DOI:
+#
+#   - id: 10.1000/example.doi
+#
+# The [] below is an empty list. It keeps this file valid while there are no
+# entries — cite.py rejects a file that parses to nothing. Delete it as soon as
+# you add your first real entry above.
+[]
