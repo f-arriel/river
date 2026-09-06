@@ -8,9 +8,9 @@
 
 backend:
   name: github
-  repo: f-arriel/river-website                            # e.g. river-group/river-website
-  branch: main                                # your default branch
-  base_url: https://river-sveltia-cms-auth.fadhilah-arriel.workers.dev/   # the worker URL, with no /callback
+  repo: f-arriel/river-website                           
+  branch: main                                
+  base_url: https://river-sveltia-cms-auth.fadhilah-arriel.workers.dev
 
 # Default upload location (overridden per collection below)
 media_folder: "images"
