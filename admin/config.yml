@@ -1,0 +1,455 @@
+# =============================================================
+#  RIVER — Sveltia CMS configuration
+#  Built for the greenelab/lab-website-template folder structure.
+#
+#  BEFORE THIS WORKS you must fill in the three values marked
+#  CHANGE ME below. See CMS-SETUP.md.
+# =============================================================
+
+backend:
+  name: github
+  repo: OWNER/REPO                                    # CHANGE ME  e.g. river-group/river-website
+  branch: main                                        # CHANGE ME if your default branch differs
+  base_url: https://YOUR-WORKER.workers.dev           # CHANGE ME  your sveltia-cms-auth worker URL
+
+# Default upload location (overridden per collection below)
+media_folder: "images"
+public_folder: "images"
+
+# The CMS interface language. Sveltia ships English by default.
+locale: en
+
+collections:
+  # -----------------------------------------------------------
+  # 1. NEWS  ->  _posts/*.md
+  # -----------------------------------------------------------
+  - name: "news"
+    label: "News / Berita"
+    label_singular: "News post / Berita"
+    folder: "_posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "md"
+    format: "yaml-frontmatter"
+    media_folder: "/images/news"
+    public_folder: "images/news"
+    fields:
+      - label: "Title / Judul"
+        name: "title"
+        widget: "string"
+        hint: "Write the English title first, then ' / ', then the Indonesian title."
+
+      - label: "Date / Tanggal"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD HH:mm:ss ZZ"
+        date_format: "YYYY-MM-DD"
+        time_format: "HH:mm"
+        picker_utc: false
+
+      - label: "Author / Penulis"
+        name: "author"
+        widget: "relation"
+        collection: "members"
+        value_field: "{{slug}}"
+        search_fields: ["name"]
+        display_fields: ["name"]
+        required: false
+        hint: "Pick a member to show their portrait alongside the post."
+
+      - label: "Tags / Tag"
+        name: "tags"
+        widget: "list"
+        required: false
+        hint: "e.g. Conference, Fieldwork, Award"
+
+      - label: "Banner image / Gambar utama"
+        name: "image"
+        widget: "image"
+        required: false
+        hint: "Optional. Used as the thumbnail in the list and the banner on the post."
+
+      - label: "Body / Isi"
+        name: "body"
+        widget: "markdown"
+
+  # -----------------------------------------------------------
+  # 2. MEMBERS  ->  _members/*.md
+  # -----------------------------------------------------------
+  - name: "members"
+    label: "Members / Anggota"
+    label_singular: "Member / Anggota"
+    folder: "_members"
+    create: true
+    slug: "{{fields.username}}"
+    extension: "md"
+    format: "yaml-frontmatter"
+    identifier_field: "name"
+    media_folder: "/images"
+    public_folder: "images"
+    view_groups:
+      - label: "Role / Peran"
+        field: "role"
+    fields:
+      - label: "Name / Nama"
+        name: "name"
+        widget: "string"
+        hint: "Full name. You may use 'English name / Nama Indonesia' if the two differ."
+
+      - label: "Username (file name)"
+        name: "username"
+        widget: "string"
+        hint: "Lowercase, no spaces, e.g. budi-santoso. Used for the page URL and the post author field."
+
+      - label: "Role / Peran"
+        name: "role"
+        widget: "select"
+        options:
+          - { label: "Principal Investigator / Ketua Peneliti", value: "principal-investigator" }
+          - { label: "Postdoctoral Researcher / Peneliti Pascadoktoral", value: "postdoc" }
+          - { label: "Research Staff / Staf Peneliti", value: "research-staff" }
+          - { label: "PhD Student / Mahasiswa Doktoral", value: "phd" }
+          - { label: "Master's Student / Mahasiswa Magister", value: "master" }
+          - { label: "Undergraduate Student / Mahasiswa Sarjana", value: "undergrad" }
+          - { label: "Alumni / Alumni", value: "alumni" }
+
+      - label: "Year left / Tahun lulus"
+        name: "graduation_year"
+        widget: "number"
+        value_type: "int"
+        required: false
+        hint: "Alumni only. The alumni list is sorted newest first."
+
+      - label: "Portrait / Foto"
+        name: "image"
+        widget: "image"
+        required: false
+
+      - label: "Custom description / Keterangan"
+        name: "description"
+        widget: "string"
+        required: false
+        hint: "Optional. Leave blank to use the default label for the role."
+
+      - label: "Affiliation / Afiliasi"
+        name: "affiliation"
+        widget: "string"
+        required: false
+
+      - label: "Links / Tautan"
+        name: "links"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - { label: "Email", name: "email", widget: "string", required: false }
+          - { label: "ORCID iD", name: "orcid", widget: "string", required: false, hint: "Format: 0000-0000-0000-0000" }
+          - { label: "Google Scholar ID", name: "google-scholar", widget: "string", required: false }
+          - { label: "ResearchGate", name: "researchgate", widget: "string", required: false }
+          - { label: "Website URL", name: "website", widget: "string", required: false }
+          - { label: "GitHub", name: "github", widget: "string", required: false }
+
+      - label: "Biography / Biografi"
+        name: "body"
+        widget: "markdown"
+        required: false
+
+  # -----------------------------------------------------------
+  # 3. RESEARCH THEMES  ->  _themes/*.md
+  # -----------------------------------------------------------
+  - name: "themes"
+    label: "Research themes / Tema riset"
+    label_singular: "Theme / Tema"
+    folder: "_themes"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "yaml-frontmatter"
+    media_folder: "/images"
+    public_folder: "images"
+    identifier_field: "title"
+    view_groups:
+      - label: "Status"
+        field: "status"
+    fields:
+      - label: "Title / Judul"
+        name: "title"
+        widget: "string"
+        hint: "e.g. Water quality monitoring / Pemantauan kualitas air"
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options:
+          - { label: "Current / Sedang berjalan", value: "current" }
+          - { label: "Past / Selesai", value: "past" }
+      - label: "Order / Urutan"
+        name: "order"
+        widget: "number"
+        value_type: "int"
+        required: false
+        hint: "Lower numbers appear first."
+      - label: "Image / Gambar"
+        name: "image"
+        widget: "image"
+        required: false
+      - label: "Description / Deskripsi"
+        name: "body"
+        widget: "markdown"
+
+  # -----------------------------------------------------------
+  # 4. EMPLOYMENT  ->  _employment/*.md
+  # -----------------------------------------------------------
+  - name: "employment"
+    label: "Alumni careers / Karier alumni"
+    label_singular: "Employer / Tempat kerja"
+    folder: "_employment"
+    create: true
+    slug: "{{year}}-{{slug}}"
+    extension: "md"
+    format: "yaml-frontmatter"
+    identifier_field: "organization"
+    fields:
+      - label: "Organization / Organisasi"
+        name: "organization"
+        widget: "string"
+        hint: "Organisation name only — do not include the person's name."
+      - label: "Year / Tahun"
+        name: "year"
+        widget: "number"
+        value_type: "int"
+      - label: "Degree / Jenjang"
+        name: "degree"
+        widget: "select"
+        required: false
+        options:
+          - { label: "PhD / Doktoral", value: "PhD" }
+          - { label: "Master's / Magister", value: "Master's" }
+          - { label: "Undergraduate / Sarjana", value: "Undergraduate" }
+      - label: "Sector / Sektor"
+        name: "sector"
+        widget: "string"
+        required: false
+        hint: "Optional. e.g. University, Government, NGO, Industry"
+
+  # -----------------------------------------------------------
+  # 5. OUTREACH  ->  _outreach/*.md
+  # -----------------------------------------------------------
+  - name: "outreach"
+    label: "Outreach / Pengabdian"
+    label_singular: "Activity / Kegiatan"
+    folder: "_outreach"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    extension: "md"
+    format: "yaml-frontmatter"
+    media_folder: "/images/outreach"
+    public_folder: "images/outreach"
+    identifier_field: "title"
+    view_groups:
+      - label: "Category / Kategori"
+        field: "category"
+    fields:
+      - label: "Title / Judul"
+        name: "title"
+        widget: "string"
+      - label: "Date / Tanggal"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+      - label: "Category / Kategori"
+        name: "category"
+        widget: "select"
+        hint: "This becomes a clickable filter tag, so keep the wording consistent."
+        options:
+          - { label: "Public lecture / Kuliah umum", value: "Public lecture" }
+          - { label: "School visit / Kunjungan sekolah", value: "School visit" }
+          - { label: "Open campus / Kampus terbuka", value: "Open campus" }
+          - { label: "Media / Liputan media", value: "Media" }
+          - { label: "Academic service / Layanan akademik", value: "Academic service" }
+          - { label: "Community / Kegiatan masyarakat", value: "Community" }
+          - { label: "Other / Lainnya", value: "Other" }
+      - label: "Host or venue / Penyelenggara atau lokasi"
+        name: "venue"
+        widget: "string"
+        required: false
+      - label: "Participants / Peserta"
+        name: "participants"
+        widget: "string"
+        required: false
+        hint: "Optional. Names of the members who took part."
+      - label: "Link / Tautan"
+        name: "link"
+        widget: "string"
+        required: false
+        hint: "Optional. URL of a news article or announcement page."
+      - label: "Photo / Foto"
+        name: "image"
+        widget: "image"
+        required: false
+      - label: "Description / Deskripsi"
+        name: "body"
+        widget: "markdown"
+        required: false
+
+  # -----------------------------------------------------------
+  # 6. PHOTO GALLERY  ->  _gallery/*.md
+  # -----------------------------------------------------------
+  - name: "gallery"
+    label: "Photo gallery / Galeri foto"
+    label_singular: "Photo / Foto"
+    folder: "_gallery"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    extension: "md"
+    format: "yaml-frontmatter"
+    media_folder: "/images/people"
+    public_folder: "images/people"
+    identifier_field: "title"
+    fields:
+      - label: "Title / Judul"
+        name: "title"
+        widget: "string"
+        hint: "Internal name only — this is not shown on the site."
+      - label: "Date / Tanggal"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        hint: "Newer photos appear first."
+      - label: "Photo / Foto"
+        name: "image"
+        widget: "image"
+      - label: "Caption / Keterangan"
+        name: "caption"
+        widget: "string"
+        required: false
+
+  # -----------------------------------------------------------
+  # 7. PUBLICATIONS  ->  _data/sources-cms.yaml
+  # -----------------------------------------------------------
+  - name: "publications"
+    label: "Publications / Publikasi"
+    editor:
+      preview: false
+    files:
+      - label: "DOI list / Daftar DOI"
+        name: "sources"
+        file: "_data/sources-cms.yaml"
+        fields:
+          - label: "Papers / Artikel"
+            name: "sources"
+            widget: "list"
+            summary: "{{fields.id}}"
+            fields:
+              - label: "DOI"
+                name: "id"
+                widget: "string"
+                hint: "The number only, starting with 10. — e.g. 10.1002/pld3.70179"
+              - label: "Type / Jenis"
+                name: "type"
+                widget: "select"
+                required: false
+                options: ["paper", "preprint", "book", "article", "journal"]
+              - label: "Representative figure / Gambar"
+                name: "image"
+                widget: "image"
+                required: false
+
+  # -----------------------------------------------------------
+  # 8. SITE PAGES  ->  index.md, research/, team/, contact/, ...
+  #    Body is a plain textarea on purpose: these pages contain
+  #    raw HTML and Liquid tags that a rich-text editor would break.
+  # -----------------------------------------------------------
+  - name: "pages"
+    label: "Site pages / Halaman situs"
+    editor:
+      preview: false
+    files:
+      - label: "Home / Beranda"
+        name: "home"
+        file: "index.md"
+        fields:
+          - label: "Body (HTML + Markdown) / Isi"
+            name: "body"
+            widget: "text"
+
+      - label: "Research / Riset"
+        name: "research"
+        file: "research/index.md"
+        fields:
+          - { label: "Page title / Judul halaman", name: "title", widget: "string" }
+          - label: "Navigation / Navigasi"
+            name: "nav"
+            widget: "object"
+            fields:
+              - { label: "Order / Urutan", name: "order", widget: "number", value_type: "int" }
+              - { label: "Tooltip / Keterangan", name: "tooltip", widget: "string", required: false }
+          - { label: "Body (HTML + Markdown) / Isi", name: "body", widget: "text" }
+
+      - label: "Team / Tim"
+        name: "team"
+        file: "team/index.md"
+        fields:
+          - { label: "Page title / Judul halaman", name: "title", widget: "string" }
+          - label: "Navigation / Navigasi"
+            name: "nav"
+            widget: "object"
+            fields:
+              - { label: "Order / Urutan", name: "order", widget: "number", value_type: "int" }
+              - { label: "Tooltip / Keterangan", name: "tooltip", widget: "string", required: false }
+          - { label: "Body (HTML + Markdown) / Isi", name: "body", widget: "text" }
+
+      - label: "Publications / Publikasi"
+        name: "projects"
+        file: "projects/index.md"
+        fields:
+          - { label: "Page title / Judul halaman", name: "title", widget: "string" }
+          - label: "Navigation / Navigasi"
+            name: "nav"
+            widget: "object"
+            fields:
+              - { label: "Order / Urutan", name: "order", widget: "number", value_type: "int" }
+              - { label: "Tooltip / Keterangan", name: "tooltip", widget: "string", required: false }
+          - { label: "Body (HTML + Markdown) / Isi", name: "body", widget: "text" }
+
+      - label: "Outreach / Pengabdian"
+        name: "outreach_page"
+        file: "outreach/index.md"
+        fields:
+          - { label: "Page title / Judul halaman", name: "title", widget: "string" }
+          - label: "Navigation / Navigasi"
+            name: "nav"
+            widget: "object"
+            fields:
+              - { label: "Order / Urutan", name: "order", widget: "number", value_type: "int" }
+              - { label: "Tooltip / Keterangan", name: "tooltip", widget: "string", required: false }
+          - { label: "Body (HTML + Markdown) / Isi", name: "body", widget: "text" }
+
+      - label: "News page / Halaman berita"
+        name: "blog"
+        file: "blog/index.md"
+        fields:
+          - { label: "Page title / Judul halaman", name: "title", widget: "string" }
+          - label: "Navigation / Navigasi"
+            name: "nav"
+            widget: "object"
+            fields:
+              - { label: "Order / Urutan", name: "order", widget: "number", value_type: "int" }
+              - { label: "Tooltip / Keterangan", name: "tooltip", widget: "string", required: false }
+          - { label: "Body (HTML + Markdown) / Isi", name: "body", widget: "text" }
+
+      - label: "Contact / Kontak"
+        name: "contact"
+        file: "contact/index.md"
+        fields:
+          - { label: "Page title / Judul halaman", name: "title", widget: "string" }
+          - label: "Navigation / Navigasi"
+            name: "nav"
+            widget: "object"
+            fields:
+              - { label: "Order / Urutan", name: "order", widget: "number", value_type: "int" }
+              - { label: "Tooltip / Keterangan", name: "tooltip", widget: "string", required: false }
+          - { label: "Body (HTML + Markdown) / Isi", name: "body", widget: "text" }
