@@ -1,3 +1,0 @@
-# Publications added through the CMS. Same purpose as sources.yaml,
-# but this is the file the CMS writes to. Leave the `sources:` key in place.
-sources: []
