@@ -8,9 +8,9 @@
 
 backend:
   name: github
-  repo: OWNER/REPO                                    # CHANGE ME  e.g. river-group/river-website
-  branch: main                                        # CHANGE ME if your default branch differs
-  base_url: https://YOUR-WORKER.workers.dev           # CHANGE ME  your sveltia-cms-auth worker URL
+  repo: f-arriel/river-website                            # e.g. river-group/river-website
+  branch: main                                # your default branch
+  base_url: https://river-sveltia-cms-auth.fadhilah-arriel.workers.dev/   # the worker URL, with no /callback
 
 # Default upload location (overridden per collection below)
 media_folder: "images"
