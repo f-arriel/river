@@ -1,4 +1,4 @@
-Visit **[f-arriel.github.io/river-website](https://f-arriel.github.io/river-website)** 🚀
+Visit **[f-arriel.github.io/river](https://f-arriel.github.io/river)** 🚀
 
 # RIVER — website
 
